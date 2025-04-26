@@ -24,6 +24,12 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+/// Constants 
+/// For the maximum ARGB value.
+const maxColorValue = 255;
+/// Used for the duration of Animation when changeing colors.
+const int animationDurationMs = 600;
+
 
 /// A Statefull widget
 class MyHomePage extends StatefulWidget {
@@ -38,44 +44,50 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  /// Private variables 
   Color _backgroundColor = Colors.white;
   Color _appBarColor = Colors.white;
   Color _appBarTextColor = Colors.black;
   Color _backgroundTextColor = Colors.black;
+  /// Instance of dart's random class used for generating random rgb values.
   final randomGenerator = math.Random();
 
+  /// Randomly generates new colors and ajusts text color based on luminance.
   void _changeBackgroundColor() {
     setState(() {
       _backgroundColor = Color.fromARGB(
-        255,
-        randomGenerator.nextInt(256),
-        randomGenerator.nextInt(256),
-        randomGenerator.nextInt(256),
+        maxColorValue,
+        randomGenerator.nextInt(maxColorValue),
+        randomGenerator.nextInt(maxColorValue),
+        randomGenerator.nextInt(maxColorValue),
       );
       _appBarColor = Color.fromARGB(
-        255,
-        randomGenerator.nextInt(256),
-        randomGenerator.nextInt(256),
-        randomGenerator.nextInt(256),
+        maxColorValue,
+        randomGenerator.nextInt(maxColorValue),
+        randomGenerator.nextInt(maxColorValue),
+        randomGenerator.nextInt(maxColorValue),
       );
 
       final double luminance = _backgroundColor.computeLuminance();
       _appBarTextColor = luminance < 0.5 ? Colors.white : Colors.black;
       _backgroundTextColor = luminance < 0.5 ? Colors.white : Colors.black;
+
     });
   }
 
+  /// Converts a color into a HEX string.
   String colorToHex(Color color) {
     return '#'
-            '${(color.a * 255).toInt().toRadixString(16).padLeft(2, '0')}'
-            '${(color.r * 255).toInt().toRadixString(16).padLeft(2, '0')}'
-            '${(color.g * 255).toInt().toRadixString(16).padLeft(2, '0')}'
-            '${(color.b * 255).toInt().toRadixString(16).padLeft(2, '0')}'
+        '${(color.a * maxColorValue).toInt().toRadixString(16).padLeft(2, '0')}'
+        '${(color.r * maxColorValue).toInt().toRadixString(16).padLeft(2, '0')}'
+        '${(color.g * maxColorValue).toInt().toRadixString(16).padLeft(2, '0')}'
+        '${(color.b * maxColorValue).toInt().toRadixString(16).padLeft(2, '0')}'
         .toUpperCase();
   }
 
   @override
   Widget build(BuildContext context) {
+    /// To get the screen sizes of the device.
     final Size screenSize = MediaQuery.of(context).size;
     final double screenHeight = screenSize.height;
     final double screenWidth = screenSize.width;
@@ -87,7 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(kToolbarHeight),
           child: AnimatedContainer(
-            duration: const Duration(milliseconds: 600),
+            duration: const Duration(milliseconds: animationDurationMs),
             curve: Curves.easeInOut,
             color: _appBarColor,
             child: AppBar(
@@ -102,7 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
         body: AnimatedContainer(
-          duration: const Duration(milliseconds: 600),
+          duration: const Duration(milliseconds: animationDurationMs),
           curve: Curves.easeInOut,
           color: _backgroundColor,
           width: double.infinity,
@@ -148,7 +160,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        'RGB(${(_backgroundColor.r * 255).toInt()}, ${(_backgroundColor.g * 255).toInt()}, ${(_backgroundColor.b * 255).toInt()})',
+                        'RGB(${(_backgroundColor.r * maxColorValue).toInt()}, ${(_backgroundColor.g * maxColorValue).toInt()}, ${(_backgroundColor.b * maxColorValue).toInt()})',
                         style: TextStyle(
                           fontSize: screenWidth * 0.03,
                           color: Colors.white,
@@ -175,7 +187,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        'RGB(${(_appBarColor.r * 255).toInt()}, ${(_appBarColor.g * 255).toInt()}, ${(_appBarColor.b * 255).toInt()})',
+                        'RGB(${(_appBarColor.r * maxColorValue).toInt()}, ${(_appBarColor.g * maxColorValue).toInt()}, ${(_appBarColor.b * maxColorValue).toInt()})',
                         style: TextStyle(
                           fontSize: screenWidth * 0.03,
                           color: Colors.white,
