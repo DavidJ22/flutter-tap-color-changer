@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_tap_color_changer/constants/app_constants.dart';
 
-
 ///MyApp
 class MyApp extends StatelessWidget {
   /// Creates an instance of MyApp.
@@ -15,9 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Random Background Color',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData(primarySwatch: Colors.blue),
       home: const MyHomePage(title: 'Tap For a Random Color'),
     );
   }
@@ -36,11 +33,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  /// Private variables 
+  /// Private variables
   Color _backgroundColor = Colors.white;
   Color _appBarColor = Colors.white;
   Color _appBarTextColor = Colors.black;
   Color _backgroundTextColor = Colors.black;
+
   /// Instance of dart's random class used for generating random rgb values.
   final randomGenerator = math.Random();
 
@@ -61,19 +59,20 @@ class _MyHomePageState extends State<MyHomePage> {
       );
 
       final double luminance = _backgroundColor.computeLuminance();
-      _appBarTextColor = luminance < luminanceLevel ? Colors.white : Colors.black;
-      _backgroundTextColor = luminance < luminanceLevel ? Colors.white : Colors.black;
-
+      _appBarTextColor =
+          luminance < luminanceLevel ? Colors.white : Colors.black;
+      _backgroundTextColor =
+          luminance < luminanceLevel ? Colors.white : Colors.black;
     });
   }
 
   /// Converts a color into a HEX string.
   String colorToHex(Color color) {
     return '#'
-        '${(color.alpha * maxColorValue).toRadixString(hexaDec).padLeft(absoluteTwo, '$absoluteZero')}'
-        '${(color.red * maxColorValue).toRadixString(hexaDec).padLeft(absoluteTwo, '$absoluteZero')}'
-        '${(color.green * maxColorValue).toRadixString(hexaDec).padLeft(absoluteTwo, '$absoluteZero')}'
-        '${(color.blue * maxColorValue).toRadixString(hexaDec).padLeft(absoluteTwo, '$absoluteZero')}'
+            '${(color.alpha * maxColorValue).toRadixString(hexaDec).padLeft(absoluteTwo, '$absoluteZero')}'
+            '${(color.red * maxColorValue).toRadixString(hexaDec).padLeft(absoluteTwo, '$absoluteZero')}'
+            '${(color.green * maxColorValue).toRadixString(hexaDec).padLeft(absoluteTwo, '$absoluteZero')}'
+            '${(color.blue * maxColorValue).toRadixString(hexaDec).padLeft(absoluteTwo, '$absoluteZero')}'
         .toUpperCase();
   }
 
@@ -115,7 +114,10 @@ class _MyHomePageState extends State<MyHomePage> {
             alignment: Alignment.center,
             children: [
               Align(
-                alignment: Alignment(absoluteZero.toDouble(), helloTextVerticalOffset),
+                alignment: Alignment(
+                  absoluteZero.toDouble(),
+                  helloTextVerticalOffset,
+                ),
                 child: Text(
                   'Hello there',
                   textAlign: TextAlign.center,
@@ -126,7 +128,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               Positioned(
-                top: screenHeight / absoluteTwo + screenHeight * infoBoxTopOffset,
+                top:
+                    screenHeight / absoluteTwo +
+                    screenHeight * infoBoxTopOffset,
                 left: screenWidth * infoBoxPadding,
                 right: screenWidth * infoBoxPadding,
                 child: Container(
