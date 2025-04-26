@@ -128,7 +128,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               Positioned(
-                top: screenHeight / absoluteTwo +
+                top:
+                    screenHeight / absoluteTwo +
                     screenHeight * infoBoxTopOffset,
                 left: screenWidth * infoBoxPadding,
                 right: screenWidth * infoBoxPadding,
