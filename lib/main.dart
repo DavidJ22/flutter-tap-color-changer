@@ -2,6 +2,8 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import 'package:flutter_tap_color_changer/constants/app_constants.dart';
+
 ///Entry the application
 void main() {
   runApp(const MyApp());
@@ -24,12 +26,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-/// Constants 
-/// For the maximum ARGB value.
-const maxColorValue = 255;
-/// Used for the duration of Animation when changeing colors.
-const int animationDurationMs = 600;
-
 
 /// A Statefull widget
 class MyHomePage extends StatefulWidget {
@@ -69,8 +65,8 @@ class _MyHomePageState extends State<MyHomePage> {
       );
 
       final double luminance = _backgroundColor.computeLuminance();
-      _appBarTextColor = luminance < 0.5 ? Colors.white : Colors.black;
-      _backgroundTextColor = luminance < 0.5 ? Colors.white : Colors.black;
+      _appBarTextColor = luminance < luminanceLevel ? Colors.white : Colors.black;
+      _backgroundTextColor = luminance < luminanceLevel ? Colors.white : Colors.black;
 
     });
   }
@@ -78,10 +74,10 @@ class _MyHomePageState extends State<MyHomePage> {
   /// Converts a color into a HEX string.
   String colorToHex(Color color) {
     return '#'
-        '${(color.a * maxColorValue).toInt().toRadixString(16).padLeft(2, '0')}'
-        '${(color.r * maxColorValue).toInt().toRadixString(16).padLeft(2, '0')}'
-        '${(color.g * maxColorValue).toInt().toRadixString(16).padLeft(2, '0')}'
-        '${(color.b * maxColorValue).toInt().toRadixString(16).padLeft(2, '0')}'
+        '${(color.alpha * maxColorValue).toRadixString(hexaDec).padLeft(absoluteTwo, '$absoluteZero')}'
+        '${(color.red * maxColorValue).toRadixString(hexaDec).padLeft(absoluteTwo, '$absoluteZero')}'
+        '${(color.green * maxColorValue).toRadixString(hexaDec).padLeft(absoluteTwo, '$absoluteZero')}'
+        '${(color.blue * maxColorValue).toRadixString(hexaDec).padLeft(absoluteTwo, '$absoluteZero')}'
         .toUpperCase();
   }
 
@@ -108,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 style: TextStyle(color: _appBarTextColor),
               ),
               backgroundColor: Colors.transparent,
-              elevation: 0,
+              elevation: absoluteZero.toDouble(),
               centerTitle: true,
             ),
           ),
@@ -123,28 +119,28 @@ class _MyHomePageState extends State<MyHomePage> {
             alignment: Alignment.center,
             children: [
               Align(
-                alignment: const Alignment(0, -0.2),
+                alignment: Alignment(absoluteZero.toDouble(), helloTextVerticalOffset),
                 child: Text(
                   'Hello there',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: screenWidth * 0.06,
+                    fontSize: screenWidth * fontSizeLarge,
                     color: _backgroundTextColor,
                   ),
                 ),
               ),
               Positioned(
-                top: screenHeight / 2 + screenHeight * 0.08,
-                left: screenWidth * 0.2,
-                right: screenWidth * 0.2,
+                top: screenHeight / absoluteTwo + screenHeight * infoBoxTopOffset,
+                left: screenWidth * infoBoxPadding,
+                right: screenWidth * infoBoxPadding,
                 child: Container(
                   padding: EdgeInsets.symmetric(
-                    vertical: screenHeight * 0.015,
-                    horizontal: screenWidth * 0.03,
+                    vertical: screenHeight * paddingVertical,
+                    horizontal: screenWidth * paddingHorizontal,
                   ),
                   decoration: BoxDecoration(
                     color: Colors.black,
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(infoBoxBorderRadius),
                   ),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -152,17 +148,17 @@ class _MyHomePageState extends State<MyHomePage> {
                       Text(
                         'Background Color:',
                         style: TextStyle(
-                          fontSize: screenWidth * 0.035,
+                          fontSize: screenWidth * fontSizeMedium,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
                         textAlign: TextAlign.center,
                       ),
-                      const SizedBox(height: 4),
+                      const SizedBox(height: smallSpacing),
                       Text(
                         'RGB(${(_backgroundColor.r * maxColorValue).toInt()}, ${(_backgroundColor.g * maxColorValue).toInt()}, ${(_backgroundColor.b * maxColorValue).toInt()})',
                         style: TextStyle(
-                          fontSize: screenWidth * 0.03,
+                          fontSize: screenWidth * fontSizeSmall,
                           color: Colors.white,
                         ),
                         textAlign: TextAlign.center,
@@ -170,26 +166,26 @@ class _MyHomePageState extends State<MyHomePage> {
                       Text(
                         colorToHex(_backgroundColor),
                         style: TextStyle(
-                          fontSize: screenWidth * 0.03,
+                          fontSize: screenWidth * fontSizeSmall,
                           color: Colors.white,
                         ),
                         textAlign: TextAlign.center,
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: mediumSpacing),
                       Text(
                         'AppBar Color:',
                         style: TextStyle(
-                          fontSize: screenWidth * 0.035,
+                          fontSize: screenWidth * fontSizeMedium,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
                         textAlign: TextAlign.center,
                       ),
-                      const SizedBox(height: 4),
+                      const SizedBox(height: smallSpacing),
                       Text(
                         'RGB(${(_appBarColor.r * maxColorValue).toInt()}, ${(_appBarColor.g * maxColorValue).toInt()}, ${(_appBarColor.b * maxColorValue).toInt()})',
                         style: TextStyle(
-                          fontSize: screenWidth * 0.03,
+                          fontSize: screenWidth * fontSizeSmall,
                           color: Colors.white,
                         ),
                         textAlign: TextAlign.center,
@@ -197,7 +193,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       Text(
                         colorToHex(_appBarColor),
                         style: TextStyle(
-                          fontSize: screenWidth * 0.03,
+                          fontSize: screenWidth * fontSizeSmall,
                           color: Colors.white,
                         ),
                         textAlign: TextAlign.center,
